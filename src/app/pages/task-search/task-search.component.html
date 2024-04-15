@@ -1,0 +1,82 @@
+<div id="search-component">
+  <label for="search-box">Филитрация по названию, статусам, исполнителю и дате дедлайна задачи.</label>
+  <div class="example-full-width">
+    <input #searchBox (click)="search(searchBox.value)" (input)="search(searchBox.value)" id="search-box"/>
+  </div>
+</div>
+
+<div class="center">
+  <table (matSortChange)="announceSortChange($event)" [dataSource]="dataSource" class="mat-elevation-z8" mat-table
+         matSort>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by number">
+        No.
+      </th>
+      <td *matCellDef="let element" mat-cell>
+
+        {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by name">
+        Name
+      </th>
+      <td *matCellDef="let element" mat-cell>  {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="title">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by title">
+        Title
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="priority">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by priority">
+        Priority
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.priority}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by status">
+        Status
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.status}} </td>
+    </ng-container>
+    <ng-container matColumnDef="deadline">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by status">
+        Deadline
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.deadline}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="performers">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by performers">
+        Performers
+      </th>
+      <td *matCellDef="let element" mat-cell> @for (performer of element.performers; track performer) {
+        {{performer}}
+        }
+      </td>
+    </ng-container>
+    //
+    <button mat-button>Basic</button>
+    <ng-container matColumnDef="edit">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by edits">
+        Edit
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        <button mat-button><a routerLink="/detail/{{element.id}}"> Редактировать задачу</a></button>
+      </td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+</div>

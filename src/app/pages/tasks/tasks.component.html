@@ -1,0 +1,59 @@
+
+
+<div  class="center" >
+  <h2>Создание задачи</h2>
+  <form class="example-form" [formGroup]="form" #myForm="ngForm">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Название задачи</mat-label>
+      <input matInput placeholder="Название задачи" value="Название задачи"  class="ex-form" formControlName="name" >
+      <mat-error *ngIf="form.controls['name'].invalid && (form.controls['name'].touched||form.controls['name'].dirty || form.controls['performers'].errors  )">Пожалуйста введите название задачи</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Заголовок задачи</mat-label>
+      <textarea matInput placeholder="Заголовок задачи"     formControlName="textTask"       ></textarea>
+      <mat-error *ngIf="form.controls['textTask'].invalid && (form.controls['textTask'].touched||form.controls['textTask'].dirty|| form.controls['performers'].errors  )">Пожалуйста введите заголовок задачи</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Дедлайн</mat-label>
+      <input matInput [matDatepicker]="dp" formControlName="date"  class="ex-form" >
+    <!--  <mat-hint>MMMM DD, YYYY</mat-hint>-->
+      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <mat-error *ngIf="form.controls['date'].invalid && (form.controls['date'].touched||form.controls['date'].dirty|| form.controls['performers'].errors  )">Пожалуйста выберите дедлайн</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="example-full-width" >
+      <mat-label for="prioritys"  >Приоритет</mat-label>
+
+      <mat-select formControlName="prioritys" required >
+        <mat-option>--</mat-option>
+
+        @for (priority of prioritys; track priority) {
+        <mat-option [value]="priority">{{priority.name}}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="form.controls['prioritys'].invalid && (form.controls['prioritys'].touched||form.controls['prioritys'].dirty || form.controls['performers'].errors )">Пожалуйста выберите приоритет</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="example-full-width" >
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option>--</mat-option>
+        @for (stat of status; track stat) {
+        <mat-option [value]="stat">{{stat.name}}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="form.controls['status'].invalid && (form.controls['status'].touched||form.controls['status'].dirty || form.controls['performers'].errors  )">Пожалуйста выберите статус</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill"  class="example-full-width" >
+      <mat-label>Исполнители</mat-label>
+      <mat-select formControlName="performers" multiple>
+        <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls['performers'].invalid && (form.controls['performers'].errors||form.controls['status'].dirty )">Пожалуйста выберите исполнителя</mat-error>
+    </mat-form-field>
+    <!-- (click) passes input value to add() and then clears the input   (click)="add(heroName.value); heroName.value=''" -->
+    <div class="example-full-width-right">
+    <button type="submit" class="add-button"  mat-flat-button color="primary"    (click)="submit(myForm)" >Добавить задачу</button>
+    </div>
+  </form>
+</div>

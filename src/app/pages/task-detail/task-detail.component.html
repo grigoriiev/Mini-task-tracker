@@ -1,0 +1,48 @@
+<div *ngIf="task">
+  <div appearance="fill" class="example-full-width">
+    <h2> Название задачи {{task.name | uppercase}}</h2>
+    <div><span>id: </span>{{task.id}}</div>
+    <div class="center">
+      <div>Краткое описание задачи:</div>
+      <div> {{task.title}}</div>
+    </div>
+  </div>
+
+  <form #myForm="ngForm" [formGroup]="form" class="example-form">
+    <div class="center">
+      <div>Cтатус задачи:</div>
+      <div> {{task.status}}</div>
+    </div>
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Изменить статус</mat-label>
+      <mat-select formControlName="status" >
+        <mat-option>--</mat-option>
+        @for (stat of status; track stat) {
+        <mat-option [value]="stat.name">{{stat.name}}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="form.controls['status'].invalid && form.controls['status'].touched">Пожалуйста выберите статус
+      </mat-error>
+    </mat-form-field>
+    <div class="center">
+      <div>Исполнители задачи:</div>
+      <div>
+        @for (author of task.performers; track author) {
+        <span>{{author}}, </span>
+        }
+      </div>
+    </div>
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Изменить исполнителей</mat-label>
+      <mat-select formControlName="performers" multiple>
+        <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls['performers'].invalid && form.controls['performers'].touched">Пожалуйста выберите
+        исполнителя
+      </mat-error>
+    </mat-form-field>
+    <div class="example-full-width-right">
+      <button (click)="save(myForm)" class="add-button" color="primary" mat-flat-button type="submit">Обновить задачу
+      </button>
+    </div>
+  </form>
